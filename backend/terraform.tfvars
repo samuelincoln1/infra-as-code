@@ -1,0 +1,7 @@
+bucket_name = "samuellincoln-terraform-state"
+sse_algorithm = "AES256"
+dynamodb_table_name = "terraform-state-locking"
+billing_mode = "PAY_PER_REQUEST"
+attribute_name = "LockID"
+attribute_type = "S"
+hash_key = "LockID"
