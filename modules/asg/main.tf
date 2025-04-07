@@ -11,7 +11,7 @@ resource "aws_launch_template" "web-server-launch-template" {
 
   user_data = base64encode(<<-EOF
               #!/bin/bash
-              echo "Hello, World" > /home/ec2-user/index.html
+              echo "Hello, World" > index.html
               nohup python3 -m http.server 8080 &
               EOF
   )
@@ -60,6 +60,20 @@ resource "aws_security_group" "web-server-security-group" {
 
 }
 
+resource "aws_security_group" "rds-security-group" {
+  name   = "iac-project-rds-security-group"
+  vpc_id = var.vpc_id
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web-server-security-group.id]
+  }
 
-
-
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [aws_security_group.web-server-security-group.id]
+  }
+}

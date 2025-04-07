@@ -9,7 +9,7 @@ resource "aws_lb" "iac-project-alb" {
 
 resource "aws_lb_target_group" "iac-project-alb-target-group" {
   name     = var.alb_target_group_name
-  port     = var.alb_target_group_port // 8080
+  port     = var.alb_target_group_port
   protocol = var.alb_target_group_protocol
   vpc_id   = var.vpc_id
 

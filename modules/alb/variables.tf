@@ -67,24 +67,3 @@ variable "ec2_cidr_blocks" {
   type        = list(string)
   description = "The CIDR blocks of the EC2 instances"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

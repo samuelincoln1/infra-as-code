@@ -67,6 +67,20 @@ module "asg" {
   rds_cidr_block         = "10.0.0.0/16"
 }
 
+module "rds" {
+  source                 = "./modules/rds"
+  engine                 = "mysql"
+  engine_version         = "8.4.4"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  port                   = 3306
+  rds_security_group_ids = [module.asg.rds-security-group-id]
+  skip_final_snapshot    = true
+  private_subnet_ids     = [module.vpc.private_subnet_id_1, module.vpc.private_subnet_id_2]
+  db_username            = var.db_username
+  db_password            = var.db_password
+}
+
 
 
 
