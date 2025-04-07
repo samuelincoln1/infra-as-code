@@ -11,7 +11,6 @@ This project demonstrates the use of Terraform to manage and provision cloud inf
 - [Setup and Deployment](#setup-and-deployment)
 - [Variables](#variables)
 - [Security Considerations](#security-considerations)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Project Overview
