@@ -21,7 +21,7 @@ provider "aws" {
 module "vpc" {
   source                      = "./modules/vpc"
   cidr_block                  = "10.0.0.0/16"
-  enable_dns_hostnames        = true
+  enable_dns_hostnames        = false
   enable_dns_support          = true
   public_subnet_cidr_block_1  = "10.0.1.0/24"
   public_subnet_cidr_block_2  = "10.0.2.0/24"
