@@ -1,6 +1,6 @@
-bucket_name = "samuellincoln-terraform-state"
+bucket_name = "samuellincoln-iac-project-state"
 sse_algorithm = "AES256"
-dynamodb_table_name = "terraform-state-locking"
+dynamodb_table_name = "iac-project-state-locking"
 billing_mode = "PAY_PER_REQUEST"
 attribute_name = "LockID"
 attribute_type = "S"
