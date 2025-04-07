@@ -54,6 +54,16 @@ resource "aws_subnet" "private-subnet-2" {
   }
 }
 
+resource "aws_subnet" "private-subnet-3" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.private_subnet_cidr_block_3
+  map_public_ip_on_launch = false
+  availability_zone       = var.availability_zone_2
+  tags = {
+    Name = "iac-project-private-subnet-3"
+  }
+}
+
 resource "aws_route_table" "public-route-table" {
   vpc_id = aws_vpc.main.id
   route {

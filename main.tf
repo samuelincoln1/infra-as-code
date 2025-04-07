@@ -30,6 +30,7 @@ module "vpc" {
   availability_zone_2         = "us-east-1b"
   private_subnet_cidr_block_1 = "10.0.3.0/24"
   private_subnet_cidr_block_2 = "10.0.4.0/24"
+  private_subnet_cidr_block_3 = "10.0.5.0/24"
 }
 
 module "alb" {
@@ -47,7 +48,22 @@ module "alb" {
   alb_target_group_health_check_healthy_threshold   = 2
   alb_target_group_health_check_unhealthy_threshold = 2
   alb_target_group_health_check_matcher             = "200-399"
-  ec2_cidr_blocks                                   = [module.vpc.private_subnet_cidr_block_1, module.vpc.private_subnet_cidr_block_2]
+  ec2_cidr_blocks                                   = [module.vpc.private_subnet_cidr_block_3]
+}
+
+
+module "rds" {
+  source                 = "./modules/rds"
+  engine                 = "mysql"
+  engine_version         = "8.4.4"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  port                   = 3306
+  rds_security_group_ids = [module.asg.rds-security-group-id]
+  skip_final_snapshot    = true
+  private_subnet_ids     = [module.vpc.private_subnet_id_1, module.vpc.private_subnet_id_2, module.vpc.private_subnet_id_3]
+  db_username            = var.db_username
+  db_password            = var.db_password
 }
 
 module "asg" {
@@ -65,20 +81,6 @@ module "asg" {
   target_group_arn       = module.alb.target_group_arn
   alb_security_group_id  = module.alb.security_group_id
   rds_cidr_block         = "10.0.0.0/16"
-}
-
-module "rds" {
-  source                 = "./modules/rds"
-  engine                 = "mysql"
-  engine_version         = "8.4.4"
-  instance_class         = "db.t3.micro"
-  allocated_storage      = 20
-  port                   = 3306
-  rds_security_group_ids = [module.asg.rds-security-group-id]
-  skip_final_snapshot    = true
-  private_subnet_ids     = [module.vpc.private_subnet_id_1, module.vpc.private_subnet_id_2]
-  db_username            = var.db_username
-  db_password            = var.db_password
 }
 
 
