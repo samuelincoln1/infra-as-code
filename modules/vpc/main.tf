@@ -20,7 +20,7 @@ resource "aws_subnet" "public-subnet-1" {
   map_public_ip_on_launch = var.map_public_ip_on_launch
   availability_zone       = var.availability_zone_1
   tags = {
-    Name = "iac-project-public-subnet"
+    Name = "iac-project-public-subnet-1"
   }
 }
 
@@ -75,6 +75,13 @@ resource "aws_route_table" "public-route-table" {
   }
 }
 
+resource "aws_route_table" "private-route-table" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "iac-project-private-route-table"
+  }
+}
+
 resource "aws_route_table_association" "public-route-table-association" {
   subnet_id      = aws_subnet.public-subnet-1.id
   route_table_id = aws_route_table.public-route-table.id
@@ -85,12 +92,6 @@ resource "aws_route_table_association" "public-route-table-association-2" {
   route_table_id = aws_route_table.public-route-table.id
 }
 
-resource "aws_route_table" "private-route-table" {
-  vpc_id = aws_vpc.main.id
-  tags = {
-    Name = "iac-project-private-route-table"
-  }
-}
 
 resource "aws_route_table_association" "private-route-table-association" {
   subnet_id      = aws_subnet.private-subnet-1.id
@@ -102,6 +103,10 @@ resource "aws_route_table_association" "private-route-table-association-2" {
   route_table_id = aws_route_table.private-route-table.id
 }
 
+resource "aws_route_table_association" "private-route-table-association-3" {
+  subnet_id      = aws_subnet.private-subnet-3.id
+  route_table_id = aws_route_table.private-route-table.id
+}
 
 
 

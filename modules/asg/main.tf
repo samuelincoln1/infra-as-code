@@ -40,13 +40,6 @@ resource "aws_security_group" "web-server-security-group" {
     security_groups = [var.alb_security_group_id]
   }
 
-  ingress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    security_groups = [var.alb_security_group_id]
-  }
-
   egress {
     from_port   = 3306
     to_port     = 3306
@@ -57,7 +50,6 @@ resource "aws_security_group" "web-server-security-group" {
   tags = {
     Name = "instances-security-group"
   }
-
 }
 
 resource "aws_security_group" "rds-security-group" {
